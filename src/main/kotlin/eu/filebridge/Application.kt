@@ -3,8 +3,7 @@ package eu.filebridge
 import eu.filebridge.plugins.*
 import io.ktor.server.application.*
 
-fun main(args: Array<String>): Unit {
-    Redis.pool
+fun main(args: Array<String>) {
     io.ktor.server.netty.EngineMain.main(args)
 }
 
@@ -13,6 +12,5 @@ fun Application.module() {
     configureSerialization()
     configureSecurity()
     configureValidation()
-    configureRedis()
     configureRouting()
 }

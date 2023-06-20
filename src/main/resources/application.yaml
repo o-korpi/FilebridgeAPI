@@ -10,8 +10,6 @@ jwt:
   realm: "Filebridge API"
   secret: $JWT_SECRET
 redis:
-  host: "localhost"
-  port: 6379
   keySchema:
     user: "user:"
     userList: "userList"
