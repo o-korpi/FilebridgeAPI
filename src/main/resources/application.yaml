@@ -1,0 +1,21 @@
+ktor:
+  application:
+    modules:
+      - eu.filebridge.ApplicationKt.module
+  deployment:
+    port: 8080
+jwt:
+  domain: "http://0.0.0.0:8080/"
+  audience: "http://0.0.0.0:8080/"
+  realm: "Filebridge API"
+  secret: $JWT_SECRET
+redis:
+  host: "localhost"
+  port: 6379
+  keySchema:
+    user: "user:"
+    userList: "userList"
+    file: "file:"
+    owner: "owner:"
+filebridge:
+  maxFiles: 10
