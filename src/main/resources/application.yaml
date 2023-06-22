@@ -6,7 +6,7 @@ ktor:
     port: 8080
 jwt:
   domain: "http://0.0.0.0:8080/"
-  audience: "http://0.0.0.0:8080/"
+  audience: "http://0.0.0.0:5173/"
   realm: "Filebridge API"
   secret: $JWT_SECRET
 redis:

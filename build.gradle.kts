@@ -42,6 +42,8 @@ dependencies {
     implementation("io.ktor:ktor-client-apache:2.3.1")
     implementation("redis.clients:jedis:4.4.3")
     implementation("at.favre.lib:bcrypt:0.10.2")
+    implementation("io.ktor:ktor-server-cors:$ktor_version")
+    implementation("io.ktor:ktor-server-cors-jvm:2.3.1")
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
 }
