@@ -4,7 +4,6 @@ import eu.filebridge.plugins.*
 import eu.filebridge.user.UserCredentials
 import eu.filebridge.user.UserService
 import eu.filebridge.utils.createToken
-import eu.filebridge.utils.getEnvProperty
 import io.ktor.server.application.*
 
 fun main(args: Array<String>) {
@@ -13,10 +12,12 @@ fun main(args: Array<String>) {
 
 @Suppress("unused") // application.conf references the main function. This annotation prevents the IDE from marking it as unused.
 fun Application.module() {
+    val debugMode = true
+
     configureSerialization()
     configureSecurity()
     configureValidation()
-    if (getEnvProperty(environment, "ktor.application.debug").toBoolean()) {
+    if (debugMode) {
         configureDebugMode()
     }
     configureRouting()
