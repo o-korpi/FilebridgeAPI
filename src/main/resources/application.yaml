@@ -1,5 +1,6 @@
 ktor:
   application:
+    debug: true
     modules:
       - eu.filebridge.ApplicationKt.module
   deployment:

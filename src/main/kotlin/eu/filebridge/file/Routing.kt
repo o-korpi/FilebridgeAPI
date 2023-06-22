@@ -15,6 +15,7 @@ fun Route.fileRoutes(environment: ApplicationEnvironment?) {
 
     authenticate("auth-jwt") {
         route("/files") {
+            /** Upload a file. */
             post {
                 val userEmail = getCallerEmail(call) ?: return@post call.respond(HttpStatusCode.Unauthorized, "Unauthorized access.")
                 val filesOwned = service.filesOwnedCount(userEmail)
@@ -30,12 +31,14 @@ fun Route.fileRoutes(environment: ApplicationEnvironment?) {
                 call.respond(HttpStatusCode.Created, uuid)
             }
 
+            /** Get information about all owned files. */
             get {
                 val email = getCallerEmail(call)
                     ?: return@get call.respond(HttpStatusCode.Unauthorized, "Unauthorized access.")
                 call.respondText(service.getOwnedFiles(email).toString())
             }
 
+            /** Get the content of a specific file. Requires ownership of file. */
             get("/{fileId}") {
                 val owner = getCallerEmail(call)
                     ?: return@get call.respond(HttpStatusCode.Unauthorized, "Unauthorized access.")
@@ -54,6 +57,7 @@ fun Route.fileRoutes(environment: ApplicationEnvironment?) {
                     call.respond(HttpStatusCode.Unauthorized, "Unauthorized access.")
             }
 
+            /** Delete a file. Requires ownership of file. */
             delete("/{fileId}") {
                 val owner = getCallerEmail(call)
                     ?: return@delete call.respond(HttpStatusCode.Unauthorized, "Unauthorized access.")

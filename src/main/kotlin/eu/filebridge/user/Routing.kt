@@ -10,10 +10,10 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 
 fun Route.userRoutes(environment: ApplicationEnvironment?) {
-    val service = UserService(environment)
+    val service = UserService(environment!!)
 
     route("/users") {
-        // Login
+        /** Login. Expects `UserCredentials`. */
         post("/login") {
             val user = call.receive<UserCredentials>()
 
@@ -26,7 +26,7 @@ fun Route.userRoutes(environment: ApplicationEnvironment?) {
             }
         }
 
-        // Register
+        /** Register. Expects `UserCredentials`. */
         post {
             val userCredentials = call.receive<UserCredentials>()
             when (val status = service.createUser(userCredentials)) {
@@ -36,7 +36,7 @@ fun Route.userRoutes(environment: ApplicationEnvironment?) {
         }
 
         authenticate("auth-jwt") {
-            /** Change password */
+            /** Change password. Expects `UserCredentials` */
             patch("/{userId}/password") {
                 val newCredentials = call.receive<UserCredentials>()
                 val callerEmail = getCallerEmail(call) ?:
@@ -51,6 +51,7 @@ fun Route.userRoutes(environment: ApplicationEnvironment?) {
                 call.respond(HttpStatusCode.NoContent, "User password successfully changed.")
             }
 
+            /** Delete user. */
             delete {
                 val email = getCallerEmail(call) ?:
                     return@delete call.respond(HttpStatusCode.Unauthorized, "Unauthorized access.")

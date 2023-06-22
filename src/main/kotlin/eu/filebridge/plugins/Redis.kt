@@ -4,7 +4,7 @@ import redis.clients.jedis.JedisPooled
 
 object Redis {
     val pool = JedisPooled(
-        "localhost",
+        "127.0.0.1",
         6379
     )
 }

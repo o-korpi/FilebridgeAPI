@@ -5,7 +5,7 @@ import eu.filebridge.utils.getEnvProperty
 import io.ktor.http.*
 import io.ktor.server.application.*
 
-class UserService(private val environment: ApplicationEnvironment?) {
+class UserService(private val environment: ApplicationEnvironment) {
     private val db = Redis.pool
     private fun userKey(user: String) = getEnvProperty(environment, "redis.keySchema.user") + user
 
