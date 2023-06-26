@@ -7,9 +7,9 @@ import io.ktor.server.application.*
 
 class UserService(private val environment: ApplicationEnvironment) {
     private val db = Redis.pool
-    private fun userKey(user: String) = getEnvProperty(environment, "redis.keySchema.user") + user
+    private fun userKey(user: String) = "user:$user" //getEnvProperty(environment, "redis.keySchema.user") + user
 
-    private val userListKey = getEnvProperty(environment, "redis.keySchema.userList")
+    private val userListKey = "users" // getEnvProperty(environment, "redis.keySchema.userList")
 
     fun createUser(userCredentials: UserCredentials): HttpStatusCode {
         val hashedPassword = Hasher.hashPassword(userCredentials.password)
@@ -34,7 +34,7 @@ class UserService(private val environment: ApplicationEnvironment) {
     }
 
     fun loginUser(userCredentials: UserCredentials): HttpStatusCode {
-        val hashedPassword = db.hget(userKey(userCredentials.email), "password")
+        val hashedPassword: String = db.hget(userKey(userCredentials.email), "password") ?: return HttpStatusCode.NotFound
         val passwordMatch = Hasher.verify(userCredentials.password, hashedPassword)
         if (!passwordMatch)
             return HttpStatusCode.Unauthorized

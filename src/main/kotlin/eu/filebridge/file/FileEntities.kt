@@ -6,7 +6,6 @@ import kotlinx.serialization.Serializable
 data class FileUpload(
     val fileName: String,
     val timeToLive: Int,
-    val owner: String,
     val data: String
 )
 

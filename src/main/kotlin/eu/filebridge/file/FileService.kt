@@ -14,11 +14,11 @@ class FileService(private val environment: ApplicationEnvironment) {
 
     fun filesOwnedCount(owner: String): Int = db.smembers(ownerKey(owner)).size
 
-    fun persistFile(file: FileUpload): UUID? {
+    fun persistFile(file: FileUpload, owner: String): UUID? {
         val fileId = UUID.randomUUID()
         runCatching {
             val fileKey = fileKey(fileId.toString())
-            val ownerKey = ownerKey(file.owner)
+            val ownerKey = ownerKey(owner)
 
             val transaction = db.multi()
             transaction.sadd(ownerKey, fileKey)

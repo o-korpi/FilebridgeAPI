@@ -19,9 +19,10 @@ fun Route.userRoutes(environment: ApplicationEnvironment?) {
 
             when (val status = service.loginUser(user)) {
                 HttpStatusCode.Unauthorized -> call.respond(status, "Unsuccessful login.")
+                HttpStatusCode.NotFound -> call.respond(HttpStatusCode.Unauthorized, "Unsuccessful login. (User does not exist (debug purpose only))")
                 HttpStatusCode.OK -> {
                     val token = createToken(user, environment)
-                    call.respond(status, hashMapOf("token" to token))
+                    call.respond(status, hashMapOf("token" to token, "ttl" to 0))
                 }
             }
         }

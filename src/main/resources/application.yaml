@@ -8,7 +8,7 @@ jwt:
   domain: "http://0.0.0.0:8080/"
   audience: "http://0.0.0.0:5173/"
   realm: "Filebridge API"
-  secret: $JWT_SECRET
+  secret: "tempsecret" #$JWT_SECRET
 redis:
   keySchema:
     user: "user:"

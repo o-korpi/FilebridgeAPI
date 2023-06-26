@@ -25,7 +25,7 @@ fun Route.fileRoutes(environment: ApplicationEnvironment?) {
 
                 val fileUpload = call.receive<FileUpload>()
 
-                val uuid = service.persistFile(fileUpload)
+                val uuid = service.persistFile(fileUpload, userEmail)
                     ?: return@post call.respond(HttpStatusCode.BadRequest, "Invalid or incomplete upload data.")
 
                 call.respond(HttpStatusCode.Created, uuid)

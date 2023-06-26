@@ -43,8 +43,8 @@ fun Application.configureDebugMode() {
         "debug@email.com",
         "password123"
     )
-
-    service.createUser(debugUser)
+    println("Creating debug user")
+    println(service.createUser(debugUser))
     val token = createToken(debugUser, environment)
     println("Token: $token")
 }
