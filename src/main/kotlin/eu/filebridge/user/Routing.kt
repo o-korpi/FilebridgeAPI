@@ -15,14 +15,18 @@ fun Route.userRoutes(environment: ApplicationEnvironment?) {
     route("/users") {
         /** Login. Expects `UserCredentials`. */
         post("/login") {
-            val user = call.receive<UserCredentials>()
-
-            when (val status = service.loginUser(user)) {
-                HttpStatusCode.Unauthorized -> call.respond(status, "Unsuccessful login.")
-                HttpStatusCode.NotFound -> call.respond(HttpStatusCode.Unauthorized, "Unsuccessful login. (User does not exist (debug purpose only))")
-                HttpStatusCode.OK -> {
-                    val token = createToken(user, environment)
-                    call.respond(status, hashMapOf("token" to token, "ttl" to 0))
+            runCatching {
+                call.receive<UserCredentials>()
+            }.onFailure {
+                return@post call.respond(HttpStatusCode.BadRequest, "Invalid credentials")
+            }.onSuccess { user ->
+                when (val status = service.loginUser(user)) {
+                    HttpStatusCode.Unauthorized -> call.respond(status, "Unsuccessful login.")
+                    HttpStatusCode.NotFound -> call.respond(HttpStatusCode.Unauthorized, "Unsuccessful login. (User does not exist (debug purpose only))")
+                    HttpStatusCode.OK -> {
+                        val token = createToken(user, environment)
+                        call.respond(status, hashMapOf("token" to token))
+                    }
                 }
             }
         }
