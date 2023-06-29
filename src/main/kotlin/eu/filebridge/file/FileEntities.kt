@@ -21,3 +21,8 @@ data class FileContent(
     val fileName: String,
     val data: String
 )
+
+@Serializable
+data class FileDataList(
+    val files: List<FileData>
+)
