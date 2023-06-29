@@ -10,10 +10,12 @@ import java.util.*
 fun createToken(userCredentials: UserCredentials, environment: ApplicationEnvironment?): String? {
     val getProperty = { path: String -> environment?.config?.property(path)?.getString() }
 
+    println(getProperty("jwt.audience"))
+
     return JWT.create()
         .withAudience(getProperty("jwt.audience"))
         .withIssuer(getProperty("jwt.domain"))
         .withClaim("email", userCredentials.email)
-        .withExpiresAt(Date(System.currentTimeMillis() + 60000))
+        .withExpiresAt(Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 7 * 31 * 2 ))//60000))
         .sign(Algorithm.HMAC256(getProperty("jwt.secret")))
 }

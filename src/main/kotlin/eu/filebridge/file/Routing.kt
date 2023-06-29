@@ -19,7 +19,7 @@ fun Route.fileRoutes(environment: ApplicationEnvironment?) {
             post {
                 val userEmail = getCallerEmail(call) ?: return@post call.respond(HttpStatusCode.Unauthorized, "Unauthorized access.")
                 val filesOwned = service.filesOwnedCount(userEmail)
-                if (filesOwned > getEnvProperty(environment, "filebridge.maxFiles").toInt()) {
+                if (filesOwned > 10) {
                     return@post call.respond(HttpStatusCode.Forbidden, "Upload limit exceeded.")
                 }
 
@@ -28,7 +28,7 @@ fun Route.fileRoutes(environment: ApplicationEnvironment?) {
                 val uuid = service.persistFile(fileUpload, userEmail)
                     ?: return@post call.respond(HttpStatusCode.BadRequest, "Invalid or incomplete upload data.")
 
-                call.respond(HttpStatusCode.Created, uuid)
+                call.respond(HttpStatusCode.Created, uuid.toString())
             }
 
             /** Get information about all owned files. */

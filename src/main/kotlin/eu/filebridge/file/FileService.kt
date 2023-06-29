@@ -9,8 +9,8 @@ import java.util.*
 
 class FileService(private val environment: ApplicationEnvironment) {
     private val db = Redis.pool
-    private fun fileKey(fileId: String) = getEnvProperty(environment, "redis.keySchema.file") + fileId
-    private fun ownerKey(email: String) = getEnvProperty(environment, "redis.keySchema.owner") + email
+    private fun fileKey(fileId: String) = "file:" //getEnvProperty(environment, "redis.keySchema.file") + fileId
+    private fun ownerKey(email: String) = "owner:" // getEnvProperty(environment, "redis.keySchema.owner") + email
 
     fun filesOwnedCount(owner: String): Int = db.smembers(ownerKey(owner)).size
 
@@ -19,6 +19,7 @@ class FileService(private val environment: ApplicationEnvironment) {
         runCatching {
             val fileKey = fileKey(fileId.toString())
             val ownerKey = ownerKey(owner)
+            println("fileKey=${fileKey}")
 
             val transaction = db.multi()
             transaction.sadd(ownerKey, fileKey)
@@ -35,6 +36,7 @@ class FileService(private val environment: ApplicationEnvironment) {
             return null
         }
 
+        println("persisted file: $fileId")
         return fileId
     }
 
