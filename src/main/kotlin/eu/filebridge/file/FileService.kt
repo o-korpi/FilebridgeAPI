@@ -76,7 +76,7 @@ class FileService(private val environment: ApplicationEnvironment) {
                 fileName,
                 remainingTime.toInt()
             )
-        }
+        }.filter { it.timeToLive > 0 }  // fix weird bug where files remain after expiring
     }
 
     fun deleteFile(fileId: String, owner: String) {
