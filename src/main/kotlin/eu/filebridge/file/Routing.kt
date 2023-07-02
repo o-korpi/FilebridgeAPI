@@ -12,6 +12,14 @@ import io.ktor.server.routing.*
 fun Route.fileRoutes(environment: ApplicationEnvironment?) {
     val service = FileService(environment!!)
 
+    route("/download") {
+        get {
+            val filename = call.request.queryParameters["name"]
+            val data = call.request.queryParameters["data"]
+
+        }
+    }
+
     authenticate("auth-jwt") {
         route("/files") {
             /** Upload a file. */
@@ -44,6 +52,8 @@ fun Route.fileRoutes(environment: ApplicationEnvironment?) {
 
                 val requestedFile = call.parameters["fileId"]
                     ?: return@get call.respond(HttpStatusCode.NotFound, "File not found.")
+
+                println(requestedFile)
 
                 if (service.getOwnedFiles(owner).map { it.fileId }.contains(requestedFile)) {
                     val file = service.getFileContent(requestedFile)

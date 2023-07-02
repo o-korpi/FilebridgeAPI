@@ -20,8 +20,6 @@ class FileService(private val environment: ApplicationEnvironment) {
             val fileKey = fileKey(fileId.toString())
             val ownerKey = ownerKey(owner)
 
-            println("fileKey = $fileKey")
-            println("fileTtl = ${file.timeToLive}")
             val transaction = db.multi()
             transaction.sadd(ownerKey, fileKey)
             transaction.hset(
@@ -68,9 +66,7 @@ class FileService(private val environment: ApplicationEnvironment) {
             }
 
             val remainingTime = db.ttl(key)
-            println("key = $key")
             val fileId = key.split(":").last()
-            println("fileId=$fileId")
             FileData(
                 fileId,
                 fileName,
