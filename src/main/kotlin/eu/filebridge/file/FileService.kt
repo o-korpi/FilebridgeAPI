@@ -6,7 +6,6 @@ import io.ktor.server.application.*
 import java.util.*
 
 
-
 class FileService(private val environment: ApplicationEnvironment) {
     private val db = Redis.pool
     private fun fileKey(fileId: String) = "file:$fileId" //getEnvProperty(environment, "redis.keySchema.file") + fileId
