@@ -5,6 +5,7 @@ import eu.filebridge.utils.getCallerEmail
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
+import io.ktor.server.pebble.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
@@ -13,6 +14,11 @@ fun Route.userRoutes(environment: ApplicationEnvironment?) {
     val service = UserService(environment!!)
 
     route("/users") {
+        get {
+            call.respond(PebbleContent("test.html", mapOf()))
+        }
+
+
         /** Login. Expects `UserCredentials`. */
         post("/login") {
             runCatching {

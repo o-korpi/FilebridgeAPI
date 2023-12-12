@@ -61,7 +61,6 @@ fun Route.fileRoutes(environment: ApplicationEnvironment?) {
                         call.respond(HttpStatusCode.NotFound, "File not found. Has it timed out?")
                     else
                         call.respond(file)
-
                 } else
                     call.respond(HttpStatusCode.Unauthorized, "Unauthorized access.")
             }

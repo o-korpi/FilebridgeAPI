@@ -1,9 +1,6 @@
 package eu.filebridge
 
-import eu.filebridge.plugins.configureRouting
-import eu.filebridge.plugins.configureSecurity
-import eu.filebridge.plugins.configureSerialization
-import eu.filebridge.plugins.configureValidation
+import eu.filebridge.plugins.*
 import eu.filebridge.user.UserCredentials
 import eu.filebridge.user.UserService
 import eu.filebridge.utils.createToken
@@ -22,6 +19,7 @@ fun Application.module() {
     configureSerialization()
     configureSecurity()
     configureValidation()
+    configureTemplating()
     install(CORS) {
         allowMethod(HttpMethod.Options)
         allowMethod(HttpMethod.Put)
