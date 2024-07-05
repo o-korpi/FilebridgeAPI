@@ -1,12 +1,12 @@
-package eu.filebridge
+package se.korpi.filebridge
 
-import eu.filebridge.plugins.configureRouting
-import eu.filebridge.plugins.configureSecurity
-import eu.filebridge.plugins.configureSerialization
-import eu.filebridge.plugins.configureValidation
-import eu.filebridge.user.UserCredentials
-import eu.filebridge.user.UserService
-import eu.filebridge.utils.createToken
+import se.korpi.filebridge.plugins.configureRouting
+import se.korpi.filebridge.plugins.configureSecurity
+import se.korpi.filebridge.plugins.configureSerialization
+import se.korpi.filebridge.plugins.configureValidation
+import se.korpi.filebridge.user.UserCredentials
+import se.korpi.filebridge.user.UserService
+import se.korpi.filebridge.utils.createToken
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.plugins.cors.routing.*

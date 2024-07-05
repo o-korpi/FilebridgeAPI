@@ -1,7 +1,7 @@
-package eu.filebridge.file
+package se.korpi.filebridge.file
 
-import eu.filebridge.plugins.Redis
-import eu.filebridge.utils.getEnvProperty
+import se.korpi.filebridge.plugins.Redis
+import se.korpi.filebridge.utils.getEnvProperty
 import io.ktor.server.application.*
 import java.util.*
 

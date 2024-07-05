@@ -1,6 +1,6 @@
-package eu.filebridge.file
+package se.korpi.filebridge.file
 
-import eu.filebridge.utils.getCallerEmail
+import se.korpi.filebridge.utils.getCallerEmail
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*

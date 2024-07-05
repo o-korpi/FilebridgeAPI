@@ -1,4 +1,4 @@
-package eu.filebridge.file
+package se.korpi.filebridge.file
 
 import kotlinx.serialization.Serializable
 

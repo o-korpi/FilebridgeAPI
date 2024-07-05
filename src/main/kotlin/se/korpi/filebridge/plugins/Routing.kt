@@ -1,7 +1,7 @@
-package eu.filebridge.plugins
+package se.korpi.filebridge.plugins
 
-import eu.filebridge.file.fileRoutes
-import eu.filebridge.user.userRoutes
+import se.korpi.filebridge.file.fileRoutes
+import se.korpi.filebridge.user.userRoutes
 import io.ktor.server.routing.*
 import io.ktor.server.application.*
 

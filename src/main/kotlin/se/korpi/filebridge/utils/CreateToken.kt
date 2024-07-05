@@ -1,8 +1,8 @@
-package eu.filebridge.utils
+package se.korpi.filebridge.utils
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.algorithms.Algorithm
-import eu.filebridge.user.UserCredentials
+import se.korpi.filebridge.user.UserCredentials
 import io.ktor.server.application.*
 import java.util.*
 

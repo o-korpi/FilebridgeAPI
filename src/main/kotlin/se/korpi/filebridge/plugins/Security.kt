@@ -1,4 +1,4 @@
-package eu.filebridge.plugins
+package se.korpi.filebridge.plugins
 
 import io.ktor.server.auth.*
 import io.ktor.server.auth.jwt.*

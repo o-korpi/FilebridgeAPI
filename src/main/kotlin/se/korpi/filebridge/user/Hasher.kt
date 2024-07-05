@@ -1,4 +1,4 @@
-package eu.filebridge.user
+package se.korpi.filebridge.user
 
 import at.favre.lib.crypto.bcrypt.BCrypt
 

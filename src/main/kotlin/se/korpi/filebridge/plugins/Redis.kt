@@ -1,4 +1,4 @@
-package eu.filebridge.plugins
+package se.korpi.filebridge.plugins
 
 import redis.clients.jedis.JedisPooled
 

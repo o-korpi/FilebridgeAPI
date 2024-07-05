@@ -1,4 +1,4 @@
-package eu.filebridge.utils
+package se.korpi.filebridge.utils
 
 import io.ktor.server.application.*
 
