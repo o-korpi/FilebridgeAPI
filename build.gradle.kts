@@ -12,6 +12,7 @@ plugins {
     kotlin("jvm") version "2.0.0"
     id("io.ktor.plugin") version "2.3.1"
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
+    id("com.ncorti.ktfmt.gradle") version "0.19.0"
 }
 
 group = "se.korpi.filebridge"
@@ -58,4 +59,8 @@ ktor {
         localImageName.set("filebridge-backend")
         imageTag.set(projectVersion)
     }
+}
+
+ktfmt {
+    kotlinLangStyle()
 }

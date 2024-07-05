@@ -1,13 +1,13 @@
 package se.korpi.filebridge.user
 
-import se.korpi.filebridge.utils.createToken
-import se.korpi.filebridge.utils.getCallerEmail
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import se.korpi.filebridge.utils.createToken
+import se.korpi.filebridge.utils.getCallerEmail
 
 fun Route.userRoutes(environment: ApplicationEnvironment?) {
     val service = UserService(environment!!)
@@ -15,20 +15,23 @@ fun Route.userRoutes(environment: ApplicationEnvironment?) {
     route("/users") {
         /** Login. Expects `UserCredentials`. */
         post("/login") {
-            runCatching {
-                call.receive<UserCredentials>()
-            }.onFailure {
-                return@post call.respond(HttpStatusCode.BadRequest, "Invalid credentials")
-            }.onSuccess { user ->
-                when (val status = service.loginUser(user)) {
-                    HttpStatusCode.Unauthorized -> call.respond(status, "Unsuccessful login.")
-                    HttpStatusCode.NotFound -> call.respond(HttpStatusCode.Unauthorized, "Unsuccessful login. (User does not exist (debug purpose only))")
-                    HttpStatusCode.OK -> {
-                        val token = createToken(user, environment)
-                        call.respond(status, hashMapOf("token" to token))
+            runCatching { call.receive<UserCredentials>() }
+                .onFailure {
+                    return@post call.respond(HttpStatusCode.BadRequest, "Invalid credentials")
+                }
+                .onSuccess { user ->
+                    when (val status = service.loginUser(user)) {
+                        HttpStatusCode.Unauthorized -> call.respond(status, "Unsuccessful login.")
+                        HttpStatusCode.NotFound ->
+                            call.respond(
+                                HttpStatusCode.Unauthorized,
+                                "Unsuccessful login. (User does not exist (debug purpose only))")
+                        HttpStatusCode.OK -> {
+                            val token = createToken(user, environment)
+                            call.respond(status, hashMapOf("token" to token))
+                        }
                     }
                 }
-            }
         }
 
         /** Register. Expects `UserCredentials`. */
@@ -44,8 +47,10 @@ fun Route.userRoutes(environment: ApplicationEnvironment?) {
             /** Change password. Expects `UserCredentials` */
             patch("/{userId}/password") {
                 val newCredentials = call.receive<UserCredentials>()
-                val callerEmail = getCallerEmail(call) ?:
-                    return@patch call.respond(HttpStatusCode.NotFound, "Unauthorized access.")
+                val callerEmail =
+                    getCallerEmail(call)
+                        ?: return@patch call.respond(
+                            HttpStatusCode.NotFound, "Unauthorized access.")
 
                 if (callerEmail != newCredentials.email) {
                     return@patch call.respond(HttpStatusCode.Unauthorized, "User not found.")
@@ -58,13 +63,18 @@ fun Route.userRoutes(environment: ApplicationEnvironment?) {
 
             /** Delete user. */
             delete {
-                val email = getCallerEmail(call) ?:
-                    return@delete call.respond(HttpStatusCode.Unauthorized, "Unauthorized access.")
+                val email =
+                    getCallerEmail(call)
+                        ?: return@delete call.respond(
+                            HttpStatusCode.Unauthorized, "Unauthorized access.")
 
                 when (val status = service.deleteUser(email)) {
                     HttpStatusCode.NoContent -> call.respond(status, "User successfully deleted.")
                     HttpStatusCode.NotFound -> call.respond(status, "User not found.")
-                    else -> call.respond(HttpStatusCode.InternalServerError, "Something went wrong in user deletion.")
+                    else ->
+                        call.respond(
+                            HttpStatusCode.InternalServerError,
+                            "Something went wrong in user deletion.")
                 }
             }
         }
