@@ -5,6 +5,7 @@ val kotlin_version: String by project
 val logback_version: String by project
 val exposed_version: String by project
 val h2_version: String by project
+val kotestVersion = "5.9.1"
 val projectVersion: String = "0.0.1"
 
 plugins {
@@ -13,7 +14,7 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
 }
 
-group = "eu.filebridge"
+group = "se.korpi.filebridge"
 version = projectVersion
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
@@ -42,8 +43,13 @@ dependencies {
     implementation("at.favre.lib:bcrypt:0.10.2")
     implementation("io.ktor:ktor-server-cors:$ktor_version")
     implementation("io.ktor:ktor-server-cors-jvm:2.3.1")
+
     testImplementation("io.ktor:ktor-server-tests-jvm:$ktor_version")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
+    testImplementation("io.kotest:kotest-runner-junit5:$kotestVersion")
+	testImplementation("io.kotest:kotest-assertions-core:$kotestVersion")
+	testImplementation("io.kotest:kotest-property:$kotestVersion")
+    testImplementation("org.testcontainers:testcontainers:1.19.8")
 }
 
 ktor {
